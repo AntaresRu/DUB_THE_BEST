@@ -109,12 +109,14 @@ def saveItems():
             obj['name'] = dlg.text_itemName.text()
             # obj['seller_name'] = dlg.text_ItemSeller.text()
 
+            flag = 1 == 3
             for y in sell:
                 if y['seller_name'] == dlg.text_ItemSeller.text():
+                    flag = 1==1
                     obj['seller'] = y['id']
-                else:
-                    QMessageBox.warning(dlg, "Ячейка", "Неверно указано имя издателя")
-                    return
+            if not flag:
+                QMessageBox.warning(dlg, "Ячейка", "Неверно указано имя издателя")
+                return
 
             obj['avtor'] = dlg.text_itemAuthor.text()
             obj['ISBN'] = dlg.text_itemISBN.text()
