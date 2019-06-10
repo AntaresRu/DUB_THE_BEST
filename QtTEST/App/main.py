@@ -18,18 +18,18 @@ url_item = str('http://127.0.0.1:8000/api/Item')
 
 def reloadItems():
     dlg.list_item.clear()
-    # dlg.text_itemSeller.setText(str(''))
-    # dlg.text_itemName.setText(str(''))
-    # dlg.text_itemAuthor.setText(str(''))
-    # dlg.text_itemISBN.setText(str(''))
-    # dlg.text_itemArticul.setText(str(''))
-    # dlg.text_itemPG.setText(str(''))
-    # dlg.text_itemYear.setText(str(''))
-    # dlg.text_itemPage.setText(str(''))
-    # dlg.text_itemType.setText(str(''))
-    # dlg.text_itemFormat.setText(str(''))
-    # dlg.text_itemMass.setText(int(''))
-    # dlg.text_itemPrise.setText(int(''))
+    dlg.text_itemName.setText(str(''))
+    dlg.text_ItemSeller.setText(str(''))
+    dlg.text_itemAuthor.setText(str(''))
+    dlg.text_itemISBN.setText(str(''))
+    dlg.text_itemArticul.setText(str(''))
+    dlg.text_itemPG.setText(str(''))
+    dlg.text_itemYear.setText(str(''))
+    dlg.text_itemPage.setText(str(''))
+    dlg.text_itemType.setText(str(''))
+    dlg.text_itemFormat.setText(str(''))
+    dlg.text_itemMass.setText(str(''))
+    dlg.text_itemPrise.setText(str(''))
     dlg.list_item.setSelectionMode(QAbstractItemView.SingleSelection)
 
     r = requests.get(str('http://127.0.0.1:8000/api/Item/'))
@@ -69,29 +69,24 @@ def itemFocusChanged():
                 dlg.text_itemPrise.setText(str(itm.data(1)['price']))
             else:
                 dlg.text_itemName.setText(str(''))
-                dlg.text_ItemSeller.setText(str[''])
-                dlg.text_itemAuthor.setText(str[''])
-                dlg.text_itemISBN.setText(str[''])
-                dlg.text_itemArticul.setText(str[''])
-                dlg.text_itemPG.setText(str[''])
-                dlg.text_itemYear.setText(str[''])
-                dlg.text_itemPage.setText(str[''])
-                dlg.text_itemType.setText(str[''])
-                dlg.text_itemFormat.setText(str[''])
-                dlg.text_itemMass.setText(str[''])
-                dlg.text_itemPrise.setText(str[''])
+                dlg.text_ItemSeller.setText(str(''))
+                dlg.text_itemAuthor.setText(str(''))
+                dlg.text_itemISBN.setText(str(''))
+                dlg.text_itemArticul.setText(str(''))
+                dlg.text_itemPG.setText(str(''))
+                dlg.text_itemYear.setText(str(''))
+                dlg.text_itemPage.setText(str(''))
+                dlg.text_itemType.setText(str(''))
+                dlg.text_itemFormat.setText(str(''))
+                dlg.text_itemMass.setText(str(''))
+                dlg.text_itemPrise.setText(str(''))
 
 
 def createItem():
     newItem = QListWidgetItem()
-    # itm = Item()
-    newItem.setText(str('Название'))
-    # newItem.setData(1, )
+    dlg.text_itemName.setText(str('Без имени'))
+    newItem.setText(str('Без имени'))
     dlg.list_item.addItem(newItem)
-
-
-# r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-
 
 def addItem():
     if not dlg.lineEdit_item.text() == "":
@@ -102,51 +97,30 @@ def addItem():
     dlg.lineEdit_item.setText("")
 
 
+def saveItems():
+    my_objects = []
 
-'''
-def reloaditeminstock():
-	dlg.list_item.clear()
-	dlg.text_itemName.setText(str(''))
-	dlg.list_item.setSelectionMode(QAbstractItemView.SingleSelection)
-	r = requests.get(str('http://127.0.0.1:8000/api/Item/'))
-	data = r.json()
-
-	for x in data:
-		newItem = QListWidgetItem()
-		newItem.setText(x['name'])
-		newItem.setData(1, x)
-		dlg.list_item.addItem(newItem)
-
-
-def iteminstockFocusChanged():
-	for x in range(dlg.list_item.count()):
-		itm = dlg.list_item.item(x)
-		if itm.isSelected():
-			if itm.data(1) is not None:
-				dlg.text_itemName.setText(itm.data(1)['name'])
-			else:
-				dlg.text_itemName.setText(str(''))
-
-
-def createiteminstock():
-	newItem = QListWidgetItem()
-	# itm = Item()
-	newItem.setText(str('Название'))
-	# newItem.setData(1, )
-	dlg.list_item.addItem(newItem)
-
-
-# r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-
-def addItem():
-	if not dlg.lineEdit_item.text() == "":
-		dlg.listWidget.addItem(dlg.lineEdit_item.text())
-	else:
-		show_message('Ошибка!', 'невозможно добать пустое поле')
-
-	dlg.lineEdit_item.setText("")
-'''
-
+    for x in range(dlg.list_item.count()):
+        itm = dlg.list_item.item(x)
+        # obj = itm.data(1)
+        if itm.data(1) is None:
+            obj = {}
+            # obj['name'] = dlg.text_itemName.text()
+            obj['name'] = dlg.text_itemName.text()
+            obj['seller_name'] = dlg.text_ItemSeller.text()
+            obj['seller'] = 1
+            obj['avtor'] = dlg.text_itemAuthor.text()
+            obj['ISBN'] = dlg.text_itemISBN.text()
+            obj['articul'] = dlg.text_itemArticul.text()
+            obj['PG'] = dlg.text_itemPG.text()
+            obj['year'] = dlg.text_itemYear.text()
+            obj['pages'] = dlg.text_itemPage.text()
+            obj['type'] = dlg.text_itemType.text()
+            obj['format'] = dlg.text_itemFormat.text()
+            obj['mass'] = dlg.text_itemMass.text()
+            obj['price'] = dlg.text_itemPrise.text()
+            # my_objects.append(obj)
+            r = requests.post('http://127.0.0.1:8000/api/Item/', data=obj)
 
 def show_message(title="Error", message="Error"):
     QMessageBox.information(None, title, message)
@@ -154,53 +128,7 @@ def show_message(title="Error", message="Error"):
 
 dlg.btn_ItemReload.clicked.connect(reloadItems)
 dlg.btn_ItemCreate.clicked.connect(createItem)
+dlg.btn_itemSave.clicked.connect(saveItems)
 dlg.list_item.itemSelectionChanged.connect(itemFocusChanged)
 dlg.show()
 app.exec()
-
-# dlg.btnBuyer.clicked.connect(table_view(url_item))
-# dlg.btnSeller.clicked.connect(table_view(url_item))
-# dlg.btnStock.clicked.connect(table_view(url_item))
-# dlg.btnDeal.clicked.connect(table_view(url_item))
-# dlg.btnTransfer.clicked.connect(table_view(url_item))
-
-
-# dlg.lineEdit_1.setFocus()
-# dlg.lineEdit_item.returnPressed.connect(addItem)
-# dlg.pushButton_item.clicked.connect(addItem)
-
-
-# отображение приложения
-
-
-# dlg.btnItem.clicked.connect(table_view('http://127.0.0.1:8000/api/SelectMyBooks?id=17'))
-
-
-'''
-def addItem():
-	if not dlg.lineEdit_item.text() == "":
-		dlg.listWidget.addItem(dlg.lineEdit_item.text())
-	else :
-		show_message('Yo Pussy', 'Добавь что нибудь в список!')
-	
-	with open('data.json','r') as file:
-		data = json.load(file)
-	
-	data["items"].append(dlg.lineEdit_item.text())
-	
-	with open('data.json','w') as file:
-		json.dump(data,file)	
-
-	dlg.lineEdit_item.setText("")
-
-
-def show_message(title="Test Title", message="Test Message"):
-	QMessageBox.information(None, title, message)
-
-def main():
-	with open('data.json','r') as file:
-		data = json.load(file)
-
-	for item in data['items']:
-		dlg.listWidget.addItem(item)
-'''
