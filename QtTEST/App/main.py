@@ -98,7 +98,7 @@ def addItem():
 
 
 def saveItems():
-    my_objects = []
+    sell = requests.get(str('http://127.0.0.1:8000/api/Seller/')).json()
 
     for x in range(dlg.list_item.count()):
         itm = dlg.list_item.item(x)
@@ -107,8 +107,15 @@ def saveItems():
             obj = {}
             # obj['name'] = dlg.text_itemName.text()
             obj['name'] = dlg.text_itemName.text()
-            obj['seller_name'] = dlg.text_ItemSeller.text()
-            obj['seller'] = 1
+            # obj['seller_name'] = dlg.text_ItemSeller.text()
+
+            for y in sell:
+                if y['seller_name'] == dlg.text_ItemSeller.text():
+                    obj['seller'] = y['id']
+                else:
+                    QMessageBox.warning(dlg, "Ячейка", "Неверно указано имя издателя")
+                    return
+
             obj['avtor'] = dlg.text_itemAuthor.text()
             obj['ISBN'] = dlg.text_itemISBN.text()
             obj['articul'] = dlg.text_itemArticul.text()
